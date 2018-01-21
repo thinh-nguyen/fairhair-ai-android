@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FairhairAI.iml" filepath="$PROJECT_DIR$/FairhairAI.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fairhair-ai-android.iml" filepath="$PROJECT_DIR$/fairhair-ai-android.iml" />
     </modules>
   </component>
 </project>

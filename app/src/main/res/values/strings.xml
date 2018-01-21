@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FairhairAI</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="search_detail_title">Edit Search</string>
 </resources>
