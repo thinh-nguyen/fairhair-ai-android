@@ -17,16 +17,16 @@ import dagger.Provides;
 @Module(includes = NetworkModule.class)
 public class ApplicationModule {
 
-    private final Context mContext;
+    private final Context context;
 
     public ApplicationModule(Context context) {
-        this.mContext = context;
+        this.context = context;
     }
 
     @Provides @Named("application")
     @Singleton
     Context provideApplicationContext() {
-        return mContext;
+        return context;
     }
 
     @Provides

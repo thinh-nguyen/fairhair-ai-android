@@ -1,15 +1,11 @@
 package com.meltwater.fairhairai.search;
 
+import android.arch.lifecycle.LiveData;
+
 import com.meltwater.fairhairai.base.BasePresenter;
-import com.meltwater.fairhairai.base.ViewModel;
 import com.meltwater.fairhairai.persistence.Search;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * Created by thinhnguyen on 1/4/18.
@@ -17,60 +13,54 @@ import io.reactivex.subjects.BehaviorSubject;
 
 public class SearchPresenter implements BasePresenter, SearchProtocol.Presenter, SearchProtocol.InteractorOutput {
 
-    private WeakReference<SearchProtocol.View> mViewReference;
-   // private SearchProtocol.View mView;
-    private SearchProtocol.InteractorInput mInteractor;
+    // No longer need to hold a view -- private WeakReference<SearchProtocol.View> mViewReference;
+    // private SearchProtocol.View mView;
+    private SearchProtocol.InteractorInput interactor;
+    private SearchProtocol.Router router;
 
-    private BehaviorSubject<SearchViewModel> searchBehaviorSubject = BehaviorSubject.create();
-
-    private SearchViewModel mViewModel;
-
-    public SearchPresenter(SearchInteractor interactor) {
-        this.mInteractor = interactor;
-    }
-
-    public void setViewReference(SearchProtocol.View view) {
-        mViewReference = new WeakReference(view);
+    public SearchPresenter(SearchInteractor interactor, SearchRouter router) {
+        this.interactor = interactor;
+        this.router = router;
     }
 
     @Override // Base
     public void onCreate() {
-        mViewModel = new SearchViewModel();
-        searchBehaviorSubject.onNext(mViewModel);
-    }
-
-    @Override //SearchProtocol.BasePresenter
-    public void doSearch(SearchQuery query) {
-
     }
 
     @Override
-    public void saveSearch(Search search){
-        mInteractor.saveSearch(search);
+    public void onSearchSelected(Search search) {
+        router.showSearchDetail(search);
     }
 
     @Override
-    public void getSearches() {
-        mInteractor.retrieveSearches();
+    public void createNewSearch() {
+        router.showSearchDetail(new Search());
     }
 
     @Override
-    public void didRetrieveSearches(List<Search> searchList) {
-        ArrayList<SearchViewModel> models = new ArrayList<>();
-        for (Search s : searchList) {
-            models.add(SearchViewModel.instance(s));
-        }
-        mViewReference.get().handleSearchList(models);
-        //mView.handleSearchList((models);
-    }
-
-    @Override //SearchProtocol.InteractorOutput
-    public void didRetrieveResult(SearchResult result) {
-
+    public void saveSearch(Search search) {
+        interactor.saveSearch(search);
+        router.showSearchList();
     }
 
     @Override
-    public Observable<SearchViewModel> getObservableViewModel() {
-        return searchBehaviorSubject;
+    public LiveData<List<Search>> getSearches() {
+        LiveData<List<Search>> searchLiveDataList = interactor.retrieveSearches();
+        return searchLiveDataList;
     }
+
+//    @Override
+//    public void didRetrieveSearches(List<Search> searchList) {
+//        ArrayList<SearchViewModel> models = new ArrayList<>();
+//        for (Search s : searchList) {
+//            models.add(SearchViewModel.instance(s));
+//        }
+//        mViewReference.get().handleSearchList(models);
+//        //mView.handleSearchList((models);
+//    }
+
+//    @Override //SearchProtocol.InteractorOutput
+//    public void didRetrieveResult(SearchResult result) {
+//
+//    }
 }

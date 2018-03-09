@@ -19,7 +19,10 @@ public interface SearchDao {
     void addSearch(Search search);
 
     @Query("SELECT * FROM Search")
-    List<Search> findSearches();
+    LiveData<List<Search>> findSearches();
+
+    @Query("SELECT * FROM Search WHERE name = :name")
+    LiveData<Search> searchByName(String name);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateSearch(Search search);

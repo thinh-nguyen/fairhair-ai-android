@@ -10,12 +10,12 @@ import java.util.List;
  * Created by thinhnguyen on 1/4/18.
  */
 
-public class SearchViewModel implements ViewModel {
+public class SearchViewModelTODO implements ViewModel {
 
     private String name;
     private List<String> keywords;
     private Operation operation;
-    private List<SearchViewModel> searchViewModels = new ArrayList<>();
+    private List<SearchViewModelTODO> searchViewModels = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -41,11 +41,11 @@ public class SearchViewModel implements ViewModel {
         this.operation = operation;
     }
 
-    public List<SearchViewModel> getSearchViewModels() {
+    public List<SearchViewModelTODO> getSearchViewModels() {
         return searchViewModels;
     }
 
-    public void setSearchViewModels(List<SearchViewModel> searchViewModels) {
+    public void setSearchViewModels(List<SearchViewModelTODO> searchViewModels) {
         this.searchViewModels = searchViewModels;
     }
 
@@ -56,8 +56,8 @@ public class SearchViewModel implements ViewModel {
         NONE
     }
 
-    public static SearchViewModel instance(Search search) {
-        SearchViewModel model = new SearchViewModel();
+    public static SearchViewModelTODO instance(Search search) {
+        SearchViewModelTODO model = new SearchViewModelTODO();
         model.setName(search.getName());
         model.setKeywords(search.getKeywords());
         model.setOperation(Operation.AND);// TODO hard code for now

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.meltwater.fairhairai.R;
-import com.meltwater.fairhairai.search.SearchViewModel;
+import com.meltwater.fairhairai.persistence.Search;
 
 import java.util.List;
 
@@ -17,10 +17,10 @@ import java.util.List;
 
 public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.SearchViewHolder> {
 
-    private List<SearchViewModel> mViewItems;
+    private List<Search> viewItems;
 
-    public SearchListAdapter(List<SearchViewModel> mViewItems) {
-        this.mViewItems = mViewItems;
+    public SearchListAdapter(List<Search> viewItems) {
+        this.viewItems = viewItems;
     }
 
     @Override
@@ -31,15 +31,22 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Se
 
     @Override
     public void onBindViewHolder(SearchViewHolder holder, int position) {
-        SearchViewModel item = mViewItems.get(position);
+        Search item = viewItems.get(position);
         holder.titleView.setText(item.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SearchActivity)v.getContext()).onSearchSelected(item);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return mViewItems.size();
+        return viewItems.size();
     }
 
+    // VIEW HOLDER INNER CLASS
     public static class SearchViewHolder extends RecyclerView.ViewHolder {
         public TextView titleView;
 

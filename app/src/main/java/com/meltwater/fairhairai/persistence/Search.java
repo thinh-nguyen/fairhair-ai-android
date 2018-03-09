@@ -23,7 +23,7 @@ public class Search implements Serializable {
 
     private String name;
     //private Operation operation;
-    private ArrayList<String> keywords;
+    private List<String> keywords;
 
     public long getId() {
         return id;
@@ -41,11 +41,11 @@ public class Search implements Serializable {
         this.name = name;
     }
 
-    public ArrayList<String> getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(ArrayList<String> keywords) {
+    public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
 

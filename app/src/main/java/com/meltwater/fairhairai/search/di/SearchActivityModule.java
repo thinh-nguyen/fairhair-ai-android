@@ -4,8 +4,8 @@ import com.meltwater.fairhairai.di.ActivityScope;
 import com.meltwater.fairhairai.persistence.AppDatabase;
 import com.meltwater.fairhairai.search.SearchInteractor;
 import com.meltwater.fairhairai.search.SearchPresenter;
+import com.meltwater.fairhairai.search.SearchRouter;
 import com.meltwater.fairhairai.search.view.SearchActivity;
-import com.meltwater.fairhairai.search.view.SearchListFragment;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,16 +17,16 @@ import dagger.Provides;
 @Module
 public class SearchActivityModule {
 
-    private SearchActivity mSearchActivity;
+    private SearchActivity searchActivity;
 
     public SearchActivityModule(SearchActivity activity) {
-        this.mSearchActivity = activity;
+        this.searchActivity = activity;
     }
 
     @Provides
     @ActivityScope
-    SearchPresenter providePresenter(SearchInteractor interactor) {
-        SearchPresenter pr = new SearchPresenter(interactor);
+    SearchPresenter providePresenter(SearchInteractor interactor, SearchRouter router) {
+        SearchPresenter pr = new SearchPresenter(interactor, router);
         interactor.setPresenter(pr);
         return pr;
     }
@@ -35,5 +35,11 @@ public class SearchActivityModule {
     @ActivityScope
     SearchInteractor provideInteractor(AppDatabase appDatabase) {
         return new SearchInteractor(appDatabase);
+    }
+
+    @Provides
+    @ActivityScope
+    SearchRouter provideRouter() {
+        return new SearchRouter(this.searchActivity);
     }
 }

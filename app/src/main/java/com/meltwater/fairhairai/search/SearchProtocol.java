@@ -1,5 +1,7 @@
 package com.meltwater.fairhairai.search;
 
+import android.arch.lifecycle.LiveData;
+
 import com.meltwater.fairhairai.base.ViewModel;
 import com.meltwater.fairhairai.persistence.Search;
 
@@ -14,38 +16,34 @@ import io.reactivex.Observable;
 public interface SearchProtocol {
 
     interface View {
-
         /* BasePresenter -> View */
-        void handleResult(UISearchResult result);
-        void handleSearchList(List<SearchViewModel> searchList);
     }
 
     interface Presenter {
-
         /* View -> BasePresenter */
-        void doSearch(SearchQuery query);
-        void saveSearch(Search search);
-        void getSearches();
-        Observable<SearchViewModel> getObservableViewModel();
+        void onSearchSelected(Search search);
+        void createNewSearch();
+        void saveSearch(Search searchViewModel);
+        LiveData<List<Search>> getSearches();
     }
 
     interface InteractorInput {
-
         /* BasePresenter -> Interactor */
         void submitSearch(SearchQuery query);
         void saveSearch(Search search);
-        void retrieveSearches();
+        LiveData<List<Search>> retrieveSearches();
     }
 
     interface InteractorOutput {
 
-        /* Interactor -> BasePresenter */
-        void didRetrieveSearches(List<Search> searchList);
-        void didRetrieveResult(SearchResult result);
+//        /* Interactor -> BasePresenter */
+//        void didRetrieveSearches(List<Search> searchList);
     }
 
     interface Router {
-
+        /* Presenter -> Router */
+        void showSearchList();
+        void showSearchDetail(Search search);
     }
 
     interface DataManagerInput {

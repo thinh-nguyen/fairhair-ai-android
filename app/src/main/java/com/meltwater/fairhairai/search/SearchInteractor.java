@@ -1,11 +1,12 @@
 package com.meltwater.fairhairai.search;
 
+import android.arch.lifecycle.LiveData;
+import android.os.AsyncTask;
+
 import com.meltwater.fairhairai.persistence.AppDatabase;
 import com.meltwater.fairhairai.persistence.Search;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Created by thinhnguyen on 1/4/18.
@@ -13,34 +14,35 @@ import javax.inject.Inject;
 
 public class SearchInteractor implements SearchProtocol.InteractorInput, SearchProtocol.DataManagerInput {
 
-    private SearchProtocol.InteractorOutput mPresenter;
+    private SearchProtocol.InteractorOutput presenter;
 
     @Override // InteractorInput
     public void submitSearch(SearchQuery query) {
 
     }
 
-    AppDatabase mAppDatabase;
+    AppDatabase appDatabase;
 
     public SearchInteractor(AppDatabase appDatabase) {
-        mAppDatabase = appDatabase;
+        this.appDatabase = appDatabase;
     }
 
     public void setPresenter(SearchProtocol.InteractorOutput presenter) {
-        mPresenter = presenter;
+        this.presenter = presenter;
     }
     @Override
     public void saveSearch(Search search) {
         if (search.getId() == 0) {
-            mAppDatabase.searchDao().addSearch(search);
+            AsyncTask.execute(() -> appDatabase.searchDao().addSearch(search));
         } else {
-            mAppDatabase.searchDao().updateSearch(search);
+            AsyncTask.execute(() -> appDatabase.searchDao().updateSearch(search));
         }
     }
 
     @Override
-    public void retrieveSearches() {
-        List<Search> searchList = mAppDatabase.searchDao().findSearches();
-        mPresenter.didRetrieveSearches(searchList);
+    public LiveData<List<Search>> retrieveSearches() {
+        LiveData<List<Search>> searchListLiveData = appDatabase.searchDao().findSearches();
+        //mPresenter.didRetrieveSearches(searchList);
+        return searchListLiveData;
     }
 }
