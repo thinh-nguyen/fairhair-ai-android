@@ -44,4 +44,12 @@
         android:layout_marginTop="300dp"
         android:text="Save"/>
 
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="350dp"
+        android:text="Search"/>
+
 </FrameLayout>

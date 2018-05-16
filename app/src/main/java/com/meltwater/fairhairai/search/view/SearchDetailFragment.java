@@ -76,7 +76,9 @@ public class SearchDetailFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Button button = view.findViewById(R.id.save_button);
+        Button saveButton = view.findViewById(R.id.save_button);
+        Button searchButton = view.findViewById(R.id.search_button);
+
         name = view.findViewById(R.id.search_name);
         keyword1 = view.findViewById(R.id.keyword1);
         keyword2 = view.findViewById(R.id.keyword2);
@@ -93,7 +95,7 @@ public class SearchDetailFragment extends Fragment {
                 keyword2.setText(kws.get(1));
             }
         }
-        button.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Save search
@@ -108,6 +110,13 @@ public class SearchDetailFragment extends Fragment {
                 }
             }
         });
+
+        searchButton.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        }));
     }
 
     @Override

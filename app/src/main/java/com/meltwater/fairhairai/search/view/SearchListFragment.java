@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import com.meltwater.fairhairai.R;
 import com.meltwater.fairhairai.persistence.Search;
 import com.meltwater.fairhairai.search.SearchProtocol;
@@ -97,5 +99,8 @@ public class SearchListFragment extends Fragment implements SearchProtocol.View 
     // Custom listener to communicate with parent Activity
     public interface OnFragmentInteractionListener {
         public void onAddSearchClicked();
+        public void onSearchClicked();
     }
+
 }
+
